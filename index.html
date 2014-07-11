@@ -78,7 +78,7 @@
         return initialMilliseconds + (now - initialTimestamp);
       };
       
-      setInterval(function(){
+      var updateColor = function(){
         var s = currentMillisecond();
         var r = s / millisecondsPerDay;
         var h = r * degreesPerDay;
@@ -92,11 +92,13 @@
         var color = 'hsl(' + h.toFixed(3) + ', 100%, ' + l.toFixed(2) + '%)';
         document.body.style.backgroundColor = color;
         document.getElementById('time').innerHTML = color;
-      }, 250);
+      };
+      setInterval(updateColor, 250);
     </script>
   </head>
   <body>
     <span id="time"></span>
     <a id="link" href="http://zachsnow.com/">&raquo;</a>
+    <script type="text/javascript">updateColor();</script>
   </body>
 </html>
