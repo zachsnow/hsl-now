@@ -30,7 +30,7 @@
         margin-top: -2em;
       }
       
-      #link {
+      a {
         color: white;
         text-decoration: none;
         font-size: 1.5em;
@@ -38,17 +38,26 @@
         padding: 0.5em;
         width: 1.5em;
         height: 1.5em;
-        
-        position: fixed;
-        right: 0.5em;
-        bottom: 0.5em;
       }
-      #link:hover {
+      a:hover {
         color: white;
         text-decoration: none;
         color: #e0e0e0;
         background-color: rgba(255,255,255,0.1);
       }
+      
+      #link {
+        position: fixed;
+        right: 0.5em;
+        bottom: 0.5em;
+      }
+      
+      #code {
+        position: fixed;
+        left: 0.5em;
+        bottom: 0.5em;
+      }
+      
     </style>
     
     <script type="text/javascript" src="//use.typekit.net/uro4cva.js"></script>
@@ -100,7 +109,8 @@
   </head>
   <body>
     <span id="time"></span>
-    <a id="link" href="http://zachsnow.com/blog/2014/hsl-now/">&raquo;</a>
+    <a id="link" href="http://zachsnow.com/">&raquo;</a>
+    <a id="code" href="https://github.com/zachsnow/hsl-now/">/</a>
     <script type="text/javascript">updateColor();</script>
   </body>
 </html>
