@@ -2,9 +2,14 @@
 <html>
   <head>
     <style>
+      html {
+        height: 100%;
+        width: 100%;
+      }
+      
       body {
         text-align: center;
-        height: 100%;
+        min-height: 100%;
         width: 100%;
       }
       
@@ -52,9 +57,17 @@
       var degreesPerDay = 360;
       var millisecondsPerDay = 24 * 60 * 60 * 1000.0;
       
-      var timestamp = function(){
-        return window.performance.now();
-      };
+      var timestamp;
+      if(window.performance){
+        timestamp = function(){
+          return window.performance.now();
+        };
+      }
+      else {
+        timestamp = function(){
+          return +(new Date());
+        };
+      }
       
       var now = new Date();
       var initialMilliseconds = (now.getHours() * 60.0 * 60 + now.getMinutes() * 60 + now.getSeconds()) * 1000.0;
