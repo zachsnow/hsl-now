@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        text-align: center;
+      }
+      
+      #time {
+        color: white;
+        font-size: 30px;
+        line-height: 40px;
+        height: 40px;
+        
+        white-space: nowrap;
+        
+        position: fixed;
+        top: 50%;
+        left: 0;
+        right: 0;
+        margin-top: -20px;
+      }
+      
+      #link {
+        color: white;
+        text-decoration: none;
+        font-size: 20px;
+        padding: 20px;
+        width: 20px;
+        height: 20px;
+        
+        position: fixed;
+        right: 10px;
+        bottom: 10px;
+      }
+      #link:hover {
+        color: white;
+        text-decoration: none;
+        color: #e0e0e0;
+        background-color: rgba(255,255,255,0.1);
+      }
+    </style>
+    
+    <script>
+      var hexPerDay = parseInt('ffffff', 16);
+      var degreesPerDay = 360;
+      var millisecondsPerDay = 24 * 60 * 60 * 1000.0;
+      
+      var timestamp = function(){
+        return window.performance.now();
+      };
+      
+      var now = new Date();
+      var initialMilliseconds = (now.getHours() * 60.0 * 60 + now.getMinutes() * 60 + now.getSeconds()) * 1000.0;
+      var initialTimestamp = timestamp();
+      
+      var currentMillisecond = function(){
+        var now = timestamp();
+        return initialMilliseconds + (now - initialTimestamp);
+      };
+      
+      setInterval(function(){
+        var s = currentMillisecond();
+        var r = s / millisecondsPerDay;
+        var h = r * degreesPerDay;
+        var l;
+        if(r <= 0.5){
+          l = r * 100.0;
+        }
+        else { 
+          l = (1.0 - r) * 100.0; 
+        }
+        var color = 'hsl(' + h.toFixed(3) + ', 100%, ' + l.toFixed(2) + '%)';
+        document.body.style.backgroundColor = color;
+        document.getElementById('time').innerHTML = color;
+      }, 250);
+    </script>
+  </head>
+  <body>
+    <code id="time"></code>
+    <a id="link" href="http://zachsnow.com/blog/2014/hsl-now/">&raquo;</a>
+  </body>
+</html>
