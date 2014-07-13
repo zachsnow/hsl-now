@@ -11,6 +11,10 @@ Just for fun.
 The *hue* component is set based on the time of day, linearly interpolating from
 `0` through `360`. The *lightness* component is also set based on the time of day,
 but it linearly interpolates from `0%` to `50%` and then back down to `0%` again.
+The *saturation* component is based on the day of the year, and interpolates
+from `50%` to `100%` and then back down to `50%`, the idea being that in the
+winter (in the northern hemisphere) the colors are less saturated, while in the
+summer they are more saturated.
 
 ## Demo
 
