@@ -58,10 +58,21 @@
         bottom: 0.5em;
       }
       
+      html.wf-loading .item {
+        visibility: hidden;
+      }
+      
     </style>
     
-    <script type="text/javascript" src="//use.typekit.net/uro4cva.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <script type="text/javascript">
+      (function(d) {
+        var config = {
+          kitId: 'uro4cva',
+          scriptTimeout: 3000
+        },
+        h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='//use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+      })(document);
+    </script>
     
     <script type="text/javascript">
       var degreesPerDay = 360;
@@ -110,9 +121,9 @@
     </script>
   </head>
   <body>
-    <span id="time"></span>
-    <a id="link" href="http://zachsnow.com/">&raquo;</a>
-    <a id="code" href="https://github.com/zachsnow/hsl-now/">/</a>
+    <span id="time" class="item"></span>
+    <a id="link" class="item" href="http://zachsnow.com/">&raquo;</a>
+    <a id="code" class="item" href="https://github.com/zachsnow/hsl-now/">/</a>
     <script type="text/javascript">updateColor();</script>
   </body>
 </html>
