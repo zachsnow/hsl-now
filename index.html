@@ -64,59 +64,43 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     
     <script type="text/javascript">
-      var hexPerDay = parseInt('ffffff', 16);
       var degreesPerDay = 360;
-      var millisecondsPerDay = 24 * 60 * 60 * 1000.0;
-      var millisecondsPerYear = millisecondsPerDay * 365; // Leap years :(
-      var daysPerYear = 365;
+      var secondsPerDay = 24 * 60 * 60;
+      var secondsPerYear = secondsPerDay * 365; // Leap years :(
+
+      var initialTime = new Date();
+      var startOfYear = new Date("1-1-" + initialTime.getFullYear());
+      var initialYearSeconds = (initialTime - startOfYear) / 1000.0;
+      var initialDaySeconds = (initialTime.getHours() * 60.0 * 60.0 + initialTime.getMinutes() * 60.0 + initialTime.getSeconds());
       
-      var timestamp;
-      if(window.performance){
-        timestamp = function(){
-          return window.performance.now();
-        };
-      }
-      else {
-        timestamp = function(){
-          return +(new Date());
-        };
-      }
-      
-      var now = new Date();
-      var startOfYear = new Date("1-1-" + now.getFullYear());
-      var initialYearMilliseconds = now - startOfYear;
-      var initialMilliseconds = (now.getHours() * 60.0 * 60 + now.getMinutes() * 60 + now.getSeconds()) * 1000.0;
-      var initialTimestamp = timestamp();
-      
-      var currentMillisecond = function(){
-        var now = timestamp();
-        return initialMilliseconds + (now - initialTimestamp);
+      var secondOfDay = function(){
+        return initialDaySeconds + (new Date() - initialTime) / 1000.0;
       };
       
-      var yearMillisecond = function(){
-        var now = timestamp();
-        return initialYearMilliseconds + (now - initialTimestamp);
+      var secondOfYear = function(){
+        return initialYearSeconds + (new Date() - initialTime);
       };
       
       var updateColor = function(){
-        var mr = currentMillisecond() / millisecondsPerDay;
-        var h = mr * degreesPerDay;
-        var l;
-        if(mr <= 0.5){
-          l = mr * 100.0;
-        }
-        else { 
-          l = (1.0 - mr) * 100.0; 
-        }
+        var dr = secondOfDay() / secondsPerDay;
         
-        var dr = yearMillisecond() / millisecondsPerYear;
+        // Interpolate from 0 to 360.
+        var h = dr * degreesPerDay;
+        
+        // Interpolate from 0% to 75% and then back down to 0%.
+        var l;
+        if(dr > 0.5){
+          dr = 1.0 - dr;
+        }
+        l = 2.0* dr * 75.0;
+        
+        // Interpolate from 50% to 100% and back down to 50% (lower than 50% gets too grey).
+        var yr = secondOfYear() / secondsPerYear;
         var s;
-        if(dr <= 0.5){
-          s = dr * 80.0 + 20.0;
+        if(yr > 0.5){
+          yr = 1.0 - yr;
         }
-        else {
-          s = (1.0 - dr) * 80.0 + 20.0;
-        }
+        s = 2.0 * yr * 50.0 + 50.0;
         
         var color = 'hsl(' + h.toFixed(3) + ', ' + s.toFixed(2) + '%, ' + l.toFixed(2) + '%)';
         document.body.style.backgroundColor = color;
