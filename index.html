@@ -80,7 +80,7 @@
       var secondsPerYear = secondsPerDay * 365; // Leap years :(
 
       var initialTime = new Date();
-      var startOfYear = new Date("1-1-" + initialTime.getFullYear());
+      var startOfYear = new Date(initialTime.getFullYear(), 0, 1);
       var initialYearSeconds = (initialTime - startOfYear) / 1000.0;
       var initialDaySeconds = (initialTime.getHours() * 60.0 * 60.0 + initialTime.getMinutes() * 60.0 + initialTime.getSeconds());
       
